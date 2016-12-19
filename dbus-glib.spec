@@ -4,7 +4,7 @@
 #
 Name     : dbus-glib
 Version  : 0.108
-Release  : 13
+Release  : 14
 URL      : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.108.tar.gz
 Source0  : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.108.tar.gz
 Summary  : GLib integration for the free desktop message bus
@@ -123,8 +123,8 @@ rm -rf %{buildroot}
 /usr/include/dbus-1.0/dbus/dbus-glib.h
 /usr/include/dbus-1.0/dbus/dbus-gtype-specialized.h
 /usr/include/dbus-1.0/dbus/dbus-gvalue-parse-variant.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libdbus-glib-1.so
+/usr/lib64/pkgconfig/dbus-glib-1.pc
 
 %files doc
 %defattr(-,root,root,-)
@@ -155,4 +155,5 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libdbus-glib-1.so.2
+/usr/lib64/libdbus-glib-1.so.2.3.3
