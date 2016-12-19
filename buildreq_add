@@ -3,3 +3,5 @@
 # desirable. One name per line, no whitespace.
 #
 glib-bin
+expat-dev
+expat-dev32

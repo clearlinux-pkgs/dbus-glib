@@ -4,7 +4,7 @@
 #
 Name     : dbus-glib
 Version  : 0.108
-Release  : 14
+Release  : 15
 URL      : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.108.tar.gz
 Source0  : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.108.tar.gz
 Summary  : GLib integration for the free desktop message bus
@@ -18,14 +18,23 @@ BuildRequires : automake
 BuildRequires : automake-dev
 BuildRequires : docbook-xml
 BuildRequires : expat-dev
+BuildRequires : expat-dev32
+BuildRequires : gcc-dev32
+BuildRequires : gcc-libgcc32
+BuildRequires : gcc-libstdc++32
 BuildRequires : gettext-bin
 BuildRequires : glib-bin
+BuildRequires : glibc-dev32
+BuildRequires : glibc-libc32
 BuildRequires : gtk-doc-dev
 BuildRequires : libtool
 BuildRequires : libtool-dev
 BuildRequires : libxslt-bin
 BuildRequires : m4
 BuildRequires : pkg-config-dev
+BuildRequires : pkgconfig(32dbus-1)
+BuildRequires : pkgconfig(32glib-2.0)
+BuildRequires : pkgconfig(32gobject-2.0)
 BuildRequires : pkgconfig(dbus-1)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(gobject-2.0)
@@ -67,6 +76,18 @@ Provides: dbus-glib-devel
 dev components for the dbus-glib package.
 
 
+%package dev32
+Summary: dev32 components for the dbus-glib package.
+Group: Default
+Requires: dbus-glib-lib32
+Requires: dbus-glib-bin
+Requires: dbus-glib-data
+Requires: dbus-glib-dev
+
+%description dev32
+dev32 components for the dbus-glib package.
+
+
 %package doc
 Summary: doc components for the dbus-glib package.
 Group: Documentation
@@ -84,14 +105,34 @@ Requires: dbus-glib-data
 lib components for the dbus-glib package.
 
 
+%package lib32
+Summary: lib32 components for the dbus-glib package.
+Group: Default
+Requires: dbus-glib-data
+
+%description lib32
+lib32 components for the dbus-glib package.
+
+
 %prep
 %setup -q -n dbus-glib-0.108
 %patch1 -p1
+pushd ..
+cp -a dbus-glib-0.108 build32
+popd
 
 %build
 export LANG=C
 %reconfigure --disable-static
 make V=1  %{?_smp_mflags}
+pushd ../build32/
+export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export CFLAGS="$CFLAGS -m32"
+export CXXFLAGS="$CXXFLAGS -m32"
+export LDFLAGS="$LDFLAGS -m32"
+%reconfigure --disable-static   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+make V=1  %{?_smp_mflags}
+popd
 
 %check
 export LANG=C
@@ -102,6 +143,15 @@ make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
 rm -rf %{buildroot}
+pushd ../build32/
+%make_install32
+if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
+then
+pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do ln -s $i 32$i ; done
+popd
+fi
+popd
 %make_install
 
 %files
@@ -125,6 +175,12 @@ rm -rf %{buildroot}
 /usr/include/dbus-1.0/dbus/dbus-gvalue-parse-variant.h
 /usr/lib64/libdbus-glib-1.so
 /usr/lib64/pkgconfig/dbus-glib-1.pc
+
+%files dev32
+%defattr(-,root,root,-)
+/usr/lib32/libdbus-glib-1.so
+/usr/lib32/pkgconfig/32dbus-glib-1.pc
+/usr/lib32/pkgconfig/dbus-glib-1.pc
 
 %files doc
 %defattr(-,root,root,-)
@@ -157,3 +213,8 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /usr/lib64/libdbus-glib-1.so.2
 /usr/lib64/libdbus-glib-1.so.2.3.3
+
+%files lib32
+%defattr(-,root,root,-)
+/usr/lib32/libdbus-glib-1.so.2
+/usr/lib32/libdbus-glib-1.so.2.3.3
