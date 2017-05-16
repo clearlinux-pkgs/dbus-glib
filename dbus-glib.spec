@@ -4,7 +4,7 @@
 #
 Name     : dbus-glib
 Version  : 0.108
-Release  : 15
+Release  : 16
 URL      : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.108.tar.gz
 Source0  : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.108.tar.gz
 Summary  : GLib integration for the free desktop message bus
