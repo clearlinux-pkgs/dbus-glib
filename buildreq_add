@@ -5,3 +5,4 @@
 glib-bin
 expat-dev
 expat-dev32
+six
