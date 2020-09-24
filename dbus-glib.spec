@@ -6,7 +6,7 @@
 #
 Name     : dbus-glib
 Version  : 0.110
-Release  : 23
+Release  : 24
 URL      : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.110.tar.gz
 Source0  : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.110.tar.gz
 Source1 : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.110.tar.gz.asc
