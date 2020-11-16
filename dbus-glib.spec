@@ -6,10 +6,10 @@
 #
 Name     : dbus-glib
 Version  : 0.110
-Release  : 24
+Release  : 25
 URL      : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.110.tar.gz
 Source0  : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.110.tar.gz
-Source1 : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.110.tar.gz.asc
+Source1  : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.110.tar.gz.asc
 Summary  : GLib integration for the free desktop message bus
 Group    : Development/Tools
 License  : AFL-2.1 GPL-2.0 GPL-2.0+
@@ -153,6 +153,7 @@ man components for the dbus-glib package.
 
 %prep
 %setup -q -n dbus-glib-0.110
+cd %{_builddir}/dbus-glib-0.110
 %patch1 -p1
 pushd ..
 cp -a dbus-glib-0.110 build32
@@ -163,14 +164,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568853544
+export SOURCE_DATE_EPOCH=1605552867
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %reconfigure --disable-static
 make  %{?_smp_mflags}
@@ -189,16 +190,16 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 cd ../build32;
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1568853544
+export SOURCE_DATE_EPOCH=1605552867
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/dbus-glib
-cp COPYING %{buildroot}/usr/share/package-licenses/dbus-glib/COPYING
-cp dbus-gmain/COPYING %{buildroot}/usr/share/package-licenses/dbus-glib/dbus-gmain_COPYING
+cp %{_builddir}/dbus-glib-0.110/COPYING %{buildroot}/usr/share/package-licenses/dbus-glib/39033cc447828edebcc86da9bcc6edcab2022292
+cp %{_builddir}/dbus-glib-0.110/dbus-gmain/COPYING %{buildroot}/usr/share/package-licenses/dbus-glib/c93412801255adf20c7636f27e5e2e7dd09dd773
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -279,8 +280,8 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/dbus-glib/COPYING
-/usr/share/package-licenses/dbus-glib/dbus-gmain_COPYING
+/usr/share/package-licenses/dbus-glib/39033cc447828edebcc86da9bcc6edcab2022292
+/usr/share/package-licenses/dbus-glib/c93412801255adf20c7636f27e5e2e7dd09dd773
 
 %files man
 %defattr(0644,root,root,0755)
