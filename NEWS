@@ -1,5 +1,76 @@
 dbus-glib is deprecated, please use GDBus in new GLib-based projects.
 
+dbus-glib 0.112 (2021-03-26)
+============================
+
+The “haunted teacup” release.
+
+dbus-glib version control is now hosted on freedesktop.org's Gitlab
+installation, and bug reports and feature requests have switched from
+Bugzilla bugs (indicated by "fd.o #nnn") to Gitlab issues
+("dbus-glib#nnn") and merge requests ("dbus-glib!nnn"). See README and
+CONTRIBUTING.md for more details.
+
+Dependencies:
+
+• dbus 1.8 was already required, but is more strongly required now:
+  the workarounds that were used to run continuous integration with dbus
+  1.6 on Ubuntu 14.04 'trusty' have been removed. (Note that dbus 1.8
+  has already reached end-of-life for security support, and newer dbus
+  stable branches are strongly recommended.)
+
+• pkg-config 0.28 is required when building from git
+
+Enhancements:
+
+• Rewrite CONTRIBUTING.md document, based on Wayland's equivalent
+  (Simon McVittie, with thanks to Ander Conselvan de Oliveira,
+  Bryce Harrington, Eric Engestrom, Pekka Paalanen and Daniel Stone
+  for their contributions to the equivalent file in Wayland)
+
+• A generated ChangeLog file, which made up a significant proportion of
+  the size of source tarball releases, is no longer included. Please
+  refer to the git repository at
+  https://gitlab.freedesktop.org/dbus/dbus-glib for detailed change
+  history. (Simon McVittie)
+
+• Improve man page (dbus-glib!1, Alan Coopersmith)
+
+• Add test coverage for fd.o#80557 (dbus-glib#1, Simon McVittie)
+
+• Use more modern GLib assertions in unit tests
+  (dbus-glib#16, dbus-glib!3, dbus-glib!4; Simon McVittie)
+
+• Improve continuous integration to be run by GitLab in addition to
+  Travis-CI (Simon McVittie)
+
+• Add clearer license information using SPDX-License-Identifier
+  (Simon McVittie)
+
+Fixes:
+
+• Allow glib-genmarshal to be overridden with
+  `./configure GLIB_GENMARSHAL=/path/to/glib-genmarshal`, for
+  cross-compilation (dbus-glib!2, Yann E. MORIN)
+
+• Avoid a double-free in dbus-binding-tool for certain inputs, possibly
+  involving nested introspection data structures (dbus-glib#9, Zhipeng Xie)
+
+• Report a better error for excessive recursion depth or unsupported
+  data types (dbus-glib#1, Simon McVittie)
+
+• Map the 15 most-recently-added DBusGError members to their corresponding
+  D-Bus error names (dbus-glib#1, Simon McVittie)
+
+• Mark all documented symbols as deprecated
+  (Simon McVittie)
+
+• Fix unit test failures during distcheck by enabling assertions
+  (Simon McVittie)
+
+• Fix a core dump during installed-tests by not attempting to close a
+  shared DBusConnection (Simon McVittie)
+
 dbus-glib 0.110 (2018-01-29)
 ============================
 

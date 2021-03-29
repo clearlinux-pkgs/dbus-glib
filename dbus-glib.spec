@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xE05AE1478F814C4F (smcv@debian.org)
 #
 Name     : dbus-glib
-Version  : 0.110
-Release  : 25
-URL      : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.110.tar.gz
-Source0  : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.110.tar.gz
-Source1  : http://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.110.tar.gz.asc
+Version  : 0.112
+Release  : 26
+URL      : https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.112.tar.gz
+Source0  : https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.112.tar.gz
+Source1  : https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.112.tar.gz.asc
 Summary  : GLib integration for the free desktop message bus
 Group    : Development/Tools
 License  : AFL-2.1 GPL-2.0 GPL-2.0+
@@ -152,11 +152,11 @@ man components for the dbus-glib package.
 
 
 %prep
-%setup -q -n dbus-glib-0.110
-cd %{_builddir}/dbus-glib-0.110
+%setup -q -n dbus-glib-0.112
+cd %{_builddir}/dbus-glib-0.112
 %patch1 -p1
 pushd ..
-cp -a dbus-glib-0.110 build32
+cp -a dbus-glib-0.112 build32
 popd
 
 %build
@@ -164,7 +164,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1605552867
+export SOURCE_DATE_EPOCH=1617058299
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -195,11 +195,11 @@ cd ../build32;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1605552867
+export SOURCE_DATE_EPOCH=1617058299
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/dbus-glib
-cp %{_builddir}/dbus-glib-0.110/COPYING %{buildroot}/usr/share/package-licenses/dbus-glib/39033cc447828edebcc86da9bcc6edcab2022292
-cp %{_builddir}/dbus-glib-0.110/dbus-gmain/COPYING %{buildroot}/usr/share/package-licenses/dbus-glib/c93412801255adf20c7636f27e5e2e7dd09dd773
+cp %{_builddir}/dbus-glib-0.112/COPYING %{buildroot}/usr/share/package-licenses/dbus-glib/aa0b83447f95c9e4b144f51b7590c77ee5033c5c
+cp %{_builddir}/dbus-glib-0.112/dbus-gmain/COPYING %{buildroot}/usr/share/package-licenses/dbus-glib/b79a4d61264303b3341005eef4ce4015f178b1b8
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -267,12 +267,12 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libdbus-glib-1.so.2
-/usr/lib64/libdbus-glib-1.so.2.3.4
+/usr/lib64/libdbus-glib-1.so.2.3.5
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libdbus-glib-1.so.2
-/usr/lib32/libdbus-glib-1.so.2.3.4
+/usr/lib32/libdbus-glib-1.so.2.3.5
 
 %files libexec
 %defattr(-,root,root,-)
@@ -280,8 +280,8 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/dbus-glib/39033cc447828edebcc86da9bcc6edcab2022292
-/usr/share/package-licenses/dbus-glib/c93412801255adf20c7636f27e5e2e7dd09dd773
+/usr/share/package-licenses/dbus-glib/aa0b83447f95c9e4b144f51b7590c77ee5033c5c
+/usr/share/package-licenses/dbus-glib/b79a4d61264303b3341005eef4ce4015f178b1b8
 
 %files man
 %defattr(0644,root,root,0755)
