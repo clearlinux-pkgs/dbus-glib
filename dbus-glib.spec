@@ -6,7 +6,7 @@
 #
 Name     : dbus-glib
 Version  : 0.112
-Release  : 26
+Release  : 27
 URL      : https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.112.tar.gz
 Source0  : https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.112.tar.gz
 Source1  : https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.112.tar.gz.asc
@@ -42,7 +42,7 @@ BuildRequires : pkgconfig(32dbus-1)
 BuildRequires : pkgconfig(32glib-2.0)
 BuildRequires : pkgconfig(dbus-1)
 BuildRequires : pkgconfig(glib-2.0)
-BuildRequires : six
+BuildRequires : pypi-six
 Patch1: 0001-Use-system-location-of-bash-completions.patch
 
 %description
@@ -164,19 +164,19 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1617058299
+export SOURCE_DATE_EPOCH=1650522057
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %reconfigure --disable-static
 make  %{?_smp_mflags}
 pushd ../build32/
-export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export PKG_CONFIG_PATH="/usr/lib32/pkgconfig:/usr/share/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
 export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
 export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
@@ -195,7 +195,7 @@ cd ../build32;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1617058299
+export SOURCE_DATE_EPOCH=1650522057
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/dbus-glib
 cp %{_builddir}/dbus-glib-0.112/COPYING %{buildroot}/usr/share/package-licenses/dbus-glib/aa0b83447f95c9e4b144f51b7590c77ee5033c5c
@@ -205,6 +205,12 @@ pushd ../build32/
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
 then
 pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do ln -s $i 32$i ; done
+popd
+fi
+if [ -d %{buildroot}/usr/share/pkgconfig ]
+then
+pushd %{buildroot}/usr/share/pkgconfig
 for i in *.pc ; do ln -s $i 32$i ; done
 popd
 fi
